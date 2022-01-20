@@ -1,3 +1,1 @@
-from flask import Flask
-
-phonebook=Flask(__name__)
+from app import phonebook

@@ -1,0 +1,11 @@
+
+   
+{% extends 'base.html' %}
+
+{% block content %}
+{% if current_user.is_authenticated %}
+    <h1>Welcome back, {{ current_user.username }}</h1>
+{% else %}
+    <h1>Welcome to our shop. Please register to use our app!</h1>
+{% endif %}
+{% endblock %}
