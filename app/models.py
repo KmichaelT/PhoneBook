@@ -15,6 +15,7 @@ class User(db.Model, UserMixin):
     email = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(256), nullable=False)
     date_created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
+    #contacts=db.relationship('Contacts',backref='author',lazy=True)
 
     def __init__(self, **kwargs):
         super().__init__(**kwargs)
@@ -27,3 +28,16 @@ class User(db.Model, UserMixin):
 
     def check_password(self, password):
         return check_password_hash(self.password, password)
+
+class Contacts(db.Model):
+    id=db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String(30),  nullable=False)
+    address=db.Column(db.String(30), nullable=False)
+    phone=db.Column(db.Numeric(12,0), nullable=False)
+    #user_id = db.Column(db.Integer, db.ForeignKey('User.id'), nullable=False)
+    def __repr__(self):
+        return f"Contacts('{self.name}','{self.phone}','{self.address}') "
+
+    def add(self):
+        db.session.add(self)
+        db.session.commit()

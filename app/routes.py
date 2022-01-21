@@ -1,13 +1,13 @@
-from app import phonebook
-from flask import render_template, redirect, url_for
+from app import phonebook, db
+from flask import render_template, redirect, url_for,flash
 from flask_login import login_user, logout_user, login_required
-from app.forms import RegisterForm, LoginForm
-from app.models import User
+from app.forms import RegisterForm, LoginForm, ContactForm
+from app.models import Contacts, User
 
 @phonebook.route('/')
 def index():
-    
-    return render_template('index.html')
+    contacts=Contacts.query.all()
+    return render_template('index.html' , people=contacts)
 
 @phonebook.route('/register', methods=["GET","POST"])
 def register():
@@ -24,7 +24,7 @@ def register():
         if user_exists:
             return redirect(url_for('register'))
         # Create a new user instance using form data
-        User(username=username, email=email, password=password)
+        User(username=username,email=email, password=password)
 
         return redirect(url_for('index'))
 
@@ -62,3 +62,20 @@ def logout():
     logout_user()
     return redirect(url_for('index'))
 
+@phonebook.route('/add_contact', methods=["GET","POST"])
+
+def add_contact():
+    form = ContactForm()
+    if form.validate_on_submit():
+        # Get the data from the form
+        name = form.name.data
+        address = form.address.data
+        phone = form.phone.data
+        
+        contact=Contacts(name=name, address=address, phone=phone)
+        contact.add()
+        flash('new contact added!')
+
+        return redirect(url_for('index'))
+
+    return render_template('add_contact.html', form=form)

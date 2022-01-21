@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block title %} Add Contacts {% endblock %}
+
+{% block content %}
+    <h1>Add your contacts here Here</h1>
+    
+    <form action="" method='post'>
+        {{ form.csrf_token }}
+        <div class="form-group">
+            <fieldset>
+                {{ form.name.label }}
+                {{ form.name(class='form-control', placeholder='name') }}
+            </fieldset>
+            <fieldset>
+                {{ form.phone.label }}
+                {{ form.phone(class='form-control', placeholder='phone') }}
+            </fieldset>
+            <fieldset>
+                {{ form.address.label }}
+                {{ form.address(class='form-control', placeholder='Address') }}
+            </fieldset>
+            
+        </div>
+        {{ form.submit(class='btn btn-outline-success') }}
+    </form>
+{% endblock %} 

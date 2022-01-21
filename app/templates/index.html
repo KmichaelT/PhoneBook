@@ -4,8 +4,50 @@
 
 {% block content %}
 {% if current_user.is_authenticated %}
-    <h1>Welcome back, {{ current_user.username }}</h1>
+    <h1 class="pb-5">Welcome back, {{ current_user.username }}</h1>
+    <h3>Your Contacts</h1>
+        <div class="card"> 
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Phone</th>
+                <th scope="col">Address</th>
+              </tr>
+            </thead>
+            <tbody>
+            {% for c in people%}
+              <tr>
+                <th scope="row">{{ c.id }}</th>
+                <td>{{ c.name }}</td>
+                <td>{{ c.phone }}</td>
+                <td>{{ c.address }}</td>
+              </tr>
+            {% endfor%}
+            </tbody>
+          </table>
+          <a href="{{ url_for('add_contact') }}" class="btn btn-success">add new contact </a>
+          <a href="{{ url_for('register') }}" class="btn btn-danger">delete contact</a>
+      
+        </div>
 {% else %}
-    <h1>Welcome to our shop. Please register to use our app!</h1>
+
+<div class="card text-center">
+    <div class="card-header">
+      PhoneBook
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Welcome to phonebook.</h5>
+      <p class="card-text">Please register or login to use our app!</p>
+      <a href="{{ url_for('register') }}" class="btn btn-primary">Register</a>
+      <a href="{{ url_for('login') }}" class="btn btn-primary">login</a>
+    </div>
+    <div class="card-footer text-muted">
+      thank you
+    </div>
+  </div>
+
+    
 {% endif %}
 {% endblock %}
